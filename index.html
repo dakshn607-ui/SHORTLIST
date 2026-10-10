@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Shortlist</title>
+<style>
+:root{--bg:#0b0b10;--panel:#17171f;--panel2:#20202b;--text:#f3f3f7;--muted:#9c9cae;--red:#e50914;--line:#2c2c3a;--ok:#2ecc71;--warn:#f5a623;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){--bg:#f6f6f9;--panel:#fff;--panel2:#ececf3;--text:#15151c;--muted:#666677;--line:#d9d9e4}}
+:root[data-theme="light"]{--bg:#f6f6f9;--panel:#fff;--panel2:#ececf3;--text:#15151c;--muted:#666677;--line:#d9d9e4}
+:root[data-theme="dark"]{--bg:#0b0b10;--panel:#17171f;--panel2:#20202b;--text:#f3f3f7;--muted:#9c9cae;--line:#2c2c3a}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;min-height:100vh}
+button,input,select,textarea{font:inherit;color:inherit}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;align-items:center;gap:18px;padding:12px 20px;background:var(--bg);border-bottom:1px solid var(--line);flex-wrap:wrap}
+.logo{font-weight:800;letter-spacing:.12em;color:var(--red);font-size:20px}
+nav{display:flex;gap:4px;overflow-x:auto;flex:1}
+nav a{padding:7px 12px;border-radius:8px;color:var(--muted);cursor:pointer;white-space:nowrap;font-size:14px}
+nav a:hover{color:var(--text)}nav a.on{color:var(--text);background:var(--panel2)}
+.right{display:flex;gap:8px;align-items:center}
+#q{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:8px 12px;width:170px}
+.btn{background:var(--red);border:0;color:#fff;padding:9px 16px;border-radius:8px;cursor:pointer;font-weight:600}
+.btn:hover{filter:brightness(1.1)}.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn.sec{background:var(--panel2);color:var(--text)}.btn.ok{background:var(--ok);color:#06210f}.btn.sm{padding:6px 11px;font-size:13px}
+.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--text)}
+main{padding:20px;max-width:1300px;margin:0 auto}
+h1,h2,h3{margin:0}
+.sec-t{font-size:19px;margin:26px 0 10px;font-weight:700}
+.row{display:flex;gap:14px;overflow-x:auto;padding-bottom:8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:16px}
+.card{cursor:pointer;flex:0 0 150px;min-width:0}
+.grid .card{flex:initial}
+.th{aspect-ratio:2/3;border-radius:10px;overflow:hidden;background:linear-gradient(135deg,#3a1c71,#d76d77);display:flex;align-items:center;justify-content:center;font-size:40px;font-weight:800;color:#fff;position:relative;transition:transform .15s}
+.card:hover .th{transform:scale(1.04)}
+.th img{width:100%;height:100%;object-fit:cover;display:block}
+.ct{margin-top:7px;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cm{font-size:12px;color:var(--muted)}
+.prog{position:absolute;left:0;bottom:0;height:4px;background:var(--red)}
+.hero{position:relative;border-radius:14px;overflow:hidden;background:var(--panel);display:flex;gap:24px;padding:26px;align-items:center;flex-wrap:wrap}
+.hero .th{width:150px;flex:none}
+.hero h1{font-size:30px}.hero p{color:var(--muted);max-width:560px;line-height:1.5}
+.tags{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.tag{font-size:12px;padding:3px 9px;border-radius:99px;background:var(--panel2);color:var(--muted)}
+.empty{text-align:center;color:var(--muted);padding:70px 10px}
+.empty h2{color:var(--text);margin-bottom:8px}
+.bd{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:50;display:flex;align-items:flex-start;justify-content:center;overflow-y:auto;padding:calc(20px + env(safe-area-inset-top,0px)) 14px 30px}
+.sheet{background:var(--panel);border-radius:14px;padding:22px;width:100%;max-width:560px;border:1px solid var(--line)}
+.sheet.wide{max-width:900px}
+.sheet h2{margin-bottom:14px}
+label{display:block;font-size:13px;color:var(--muted);margin:12px 0 5px}
+input[type=text],input[type=password],input[type=date],select,textarea{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px}
+textarea{min-height:80px;resize:vertical}
+.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.note{font-size:13px;color:var(--muted);margin-top:10px;line-height:1.45}
+.banner{padding:12px 14px;border-radius:10px;margin:12px 0;font-size:14px;line-height:1.45}
+.banner.ok{background:rgba(46,204,113,.15);border:1px solid var(--ok)}
+.banner.bad{background:rgba(229,9,20,.14);border:1px solid var(--red)}
+.banner.warn{background:rgba(245,166,35,.14);border:1px solid var(--warn)}
+.auth{max-width:460px;margin:7vh auto;padding:0 14px}
+.auth .logo{font-size:30px;text-align:center;margin-bottom:6px}
+.auth .sub{text-align:center;color:var(--muted);margin-bottom:18px}
+.tabs{display:flex;gap:6px;margin:16px 0 4px;flex-wrap:wrap}
+.tabs button{background:var(--panel2);border:0;padding:8px 14px;border-radius:8px;cursor:pointer;color:var(--muted)}
+.tabs button.on{background:var(--red);color:#fff}
+.list{display:grid;gap:12px}
+.item{display:flex;gap:14px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px;align-items:flex-start;flex-wrap:wrap}
+.item .th{width:84px;flex:none;font-size:26px}
+.item .body{flex:1;min-width:200px}
+.item h3{font-size:16px}
+.badge{display:inline-block;font-size:12px;padding:3px 9px;border-radius:99px;font-weight:600}
+.b-draft{background:var(--panel2);color:var(--muted)}.b-pending{background:rgba(245,166,35,.2);color:var(--warn)}
+.b-published{background:rgba(46,204,113,.2);color:var(--ok)}.b-rejected{background:rgba(229,9,20,.2);color:#ff6b73}
+.sel2{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.sel2 select{width:auto}
+video{width:100%;max-height:70vh;background:#000;border-radius:10px}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(24px + env(safe-area-inset-bottom,0px));background:#222;color:#fff;padding:12px 18px;border-radius:10px;z-index:90;max-width:90vw;box-shadow:0 6px 24px rgba(0,0,0,.4);font-size:14px}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.tp{width:90px;margin-top:6px}
+@media (max-width:640px){header{gap:8px;padding:10px 12px}#q{width:120px}main{padding:14px}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="modal"></div>
+<div id="toast"></div>
+
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const ADMIN_USER='ARDA', ADMIN_PASS='Rado$123';
+const CATS={short:'Short Films'};
+const GENRES=['Action','Adventure','Animation','Comedy','Crime','Documentary','Drama','Family','Fantasy','Horror','Mystery','Romance','Sci-Fi','Thriller','Other'];
+const RATINGS=['All ages','7+','13+','16+','18+'];
+const S={db:null,user:null,assets:null,uid:null,profile:null,activity:{progress:{},likes:[],seen:{}},movies:[],view:'home',q:'',genre:'',admin:false,adminTab:'review',authTab:'viewer',ready:false,noDb:false,canWrite:true};
+let E=null, PL=null;
+try{S.admin=sessionStorage.getItem('rh_admin')==='1'}catch(e){}
+
+/* ---------- helpers ---------- */
+function toast(msg,ms){const t=$('#toast');t.innerHTML='<div class="toast">'+esc(msg)+'</div>';clearTimeout(toast._t);toast._t=setTimeout(()=>t.innerHTML='',ms||3800)}
+const pub=()=>S.movies.filter(m=>m.status==='published');
+const byId=id=>S.movies.find(m=>m.id===id);
+const img=(src,cls)=>/^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+\/=]+$/.test(src||'')?'<img class="'+(cls||'')+'" src="'+src+'" alt="">':'';
+const blob=id=>/^[0-9a-f]{32}$/.test(id||'')?'/_blob/'+id:'';
+const okUrl=u=>/^https:\/\/[^\s"'<>]+$/i.test(u||'');
+const vurl=(m,tr)=>{const u=tr?m.trailerUrl:m.videoUrl;return okUrl(u)?u:blob(tr?m.trailerId:m.videoId)};
+function embed(u){let x=u.match(/^https:\/\/(?:www\.|m\.)?youtube\.com\/watch\?(?:[^#]*&)?v=([\w-]{11})/i)||u.match(/^https:\/\/youtu\.be\/([\w-]{11})/i)||u.match(/^https:\/\/(?:www\.)?youtube\.com\/(?:embed|shorts)\/([\w-]{11})/i);if(x)return 'https://www.youtube-nocookie.com/embed/'+x[1];x=u.match(/^https:\/\/(?:www\.)?vimeo\.com\/(?:video\/)?(\d+)/i)||u.match(/^https:\/\/player\.vimeo\.com\/video\/(\d+)/i);if(x)return 'https://player.vimeo.com/video/'+x[1];return ''}
+const newId=()=>'m'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+function age(d){const b=new Date(d),n=new Date();if(isNaN(b))return -1;let a=n.getFullYear()-b.getFullYear();const m=n.getMonth()-b.getMonth();if(m<0||(m===0&&n.getDate()<b.getDate()))a--;return a}
+function modal(html,wide){$('#modal').innerHTML='<div class="bd" data-act="bd"><div class="sheet'+(wide?' wide':'')+'">'+html+'</div></div>'}
+function closeModal(){const v=$('#modal video');if(v)flushProgress(v);$('#modal').innerHTML='';PL=null;E=null}
+function opts(arr,sel,ph){return (ph?'<option value="">'+esc(ph)+'</option>':'')+arr.map(x=>'<option'+(x===sel?' selected':'')+'>'+esc(x)+'</option>').join('')}
+const apath=()=>'data/users/'+S.uid+'/activity';
+let saveT=null;
+function saveActivity(now){clearTimeout(saveT);const go=async()=>{try{await S.db.doc(apath()).set(S.activity)}catch(e){if(!saveActivity.warned){saveActivity.warned=1;toast("Couldn't save your activity (view-only access?)")}}};if(now)return go();saveT=setTimeout(go,1200)}
+
+/* ---------- init ---------- */
+async function init(){
+  render();
+  try{
+    if(!window.claude)throw 0;
+    S.user=await claude.use('user');S.db=await claude.use('db');S.assets=await claude.use('assets');
+  }catch(e){}
+  if(!S.db||!S.user){S.noDb=true;S.ready=true;render();return}
+  try{
+    S.uid=await S.user.id();
+    if(!S.uid)throw 0;
+    if(S.user.can){try{S.canWrite=(await S.user.can('data.write'))!==false}catch(e){}}
+    const p=await S.db.doc('data/users/'+S.uid+'/profile').get();S.profile=p.exists?p.data():null;
+    const a=await S.db.doc(apath()).get();
+    if(a.exists){const d=a.data();S.activity={progress:d.progress||{},likes:d.likes||[],seen:d.seen||{}}}
+  }catch(e){S.noDb=true}
+  S.ready=true;
+  if(!S.noDb)S.db.collection('movies').onSnapshot(snap=>{S.movies=snap.docs.map(d=>Object.assign({},d.data(),{id:d.id}));render()},()=>{});
+  render();
+}
+
+/* ---------- render ---------- */
+function render(){
+  const app=$('#app');
+  if(!S.ready){app.innerHTML='<div class="empty"><h2>Loading…</h2></div>';return}
+  if(S.noDb){app.innerHTML='<div class="auth"><div class="logo">SHORTLIST</div><div class="banner warn">This site needs to be opened in claude.ai while signed in, so it can sign you in and save your data.</div></div>';return}
+  if(!S.profile&&!S.admin){app.innerHTML=authHTML();return}
+  const nav=[['home','Home'],['short','Short Films'],['mylist','My List']];
+  if(S.profile&&S.profile.isDirector)nav.push(['studio','Upload / Edit Movies']);
+  nav.push(['admin',S.admin?'Admin':'Admin login']);
+  app.innerHTML='<header><div class="logo">SHORTLIST</div><nav>'+nav.map(n=>'<a class="'+(S.view===n[0]?'on':'')+'" data-act="nav" data-v="'+n[0]+'">'+esc(n[1])+'</a>').join('')+'</nav><div class="right"><input id="q" type="text" placeholder="Search" value="'+esc(S.q)+'">'+
+    (S.profile&&!S.profile.isDirector?'<button class="btn sec sm" data-act="beDirector">Become a Director</button>':'')+
+    '<span class="tag">'+esc(S.profile?S.profile.name:'Admin')+'</span></div></header><main id="content"></main>';
+  fill();
+}
+function fill(){
+  const c=$('#content');if(!c)return;
+  let h=S.canWrite?'':'<div class="banner warn">You have view-only access to this site, so progress and likes can’t be saved. Ask the owner for Contributor access.</div>';
+  if(S.q.trim())h+=searchHTML();
+  else if(S.view==='home')h+=homeHTML();
+  else if(CATS[S.view])h+=catHTML(S.view);
+  else if(S.view==='mylist')h+=myListHTML();
+  else if(S.view==='studio')h+=studioHTML();
+  else if(S.view==='admin')h+=S.admin?adminHTML():adminLoginPrompt();
+  c.innerHTML=h;
+}
+
+/* ---------- auth ---------- */
+function authHTML(){
+  const d=S.authTab==='director';
+  return '<div class="auth"><div class="logo">SHORTLIST</div><div class="sub">Sign in to watch, save your list and continue where you left off.</div>'+
+  '<div class="sheet"><div class="tabs"><button class="'+(!d?'on':'')+'" data-act="atab" data-v="viewer">Viewer account</button><button class="'+(d?'on':'')+'" data-act="atab" data-v="director">Director account</button></div>'+
+  (d?directorForm():'<label>Display name</label><input type="text" id="a-name" placeholder="Your name"><div class="acts"><button class="btn" data-act="mkViewer">Create account &amp; sign in</button></div><div class="note">You’re signed in through your Claude account. Creating a profile links your watch history and likes to it.</div>')+
+  '</div><div style="text-align:center;margin-top:14px"><button class="btn ghost sm" data-act="adminLogin">Admin login</button></div></div>';
+}
+function directorForm(){return '<label>Full name</label><input type="text" id="d-name" placeholder="Full legal name"><label>Date of birth</label><input type="date" id="d-dob"><div class="note">You must be older than 16 to create a director account.</div><div class="acts"><button class="btn" data-act="mkDirector">Create director account</button></div>'}
+
+/* ---------- catalogue ---------- */
+function card(m,prog){
+  const p=S.activity.progress[m.id];const pct=prog&&p&&p.d?Math.min(100,p.t/p.d*100):0;
+  return '<div class="card" data-act="open" data-id="'+m.id+'"><div class="th">'+(img(m.thumb)||esc((m.title||'?')[0]))+(pct?'<div class="prog" style="width:'+pct+'%"></div>':'')+'</div><div class="ct">'+esc(m.title)+'</div><div class="cm">'+esc(m.genre||'')+(m.rating?' · '+esc(m.rating):'')+'</div></div>'}
+const rowHTML=(t,l,prog)=>l.length?'<div class="sec-t">'+esc(t)+'</div><div class="row">'+l.map(m=>card(m,prog)).join('')+'</div>':'';
+const emptyHTML=()=>'<div class="empty"><h2>Nothing to watch yet</h2><p>Short films appear here once a director uploads one and the admin approves it.</p></div>';
+function homeHTML(){
+  const p=pub();if(!p.length)return emptyHTML();
+  const hero=p.slice().sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0))[0];
+  const cw=Object.entries(S.activity.progress||{}).filter(([id,x])=>{const m=byId(id);return m&&m.status==='published'&&x.d&&x.t/x.d>.01&&x.t/x.d<.95}).sort((a,b)=>b[1].ts-a[1].ts).map(([id])=>byId(id));
+  return '<div class="hero"><div class="th">'+(img(hero.thumb)||esc(hero.title[0]))+'</div><div><div class="tags"><span class="tag">'+esc(CATS[hero.category]||'')+'</span>'+(hero.genre?'<span class="tag">'+esc(hero.genre)+'</span>':'')+(hero.rating?'<span class="tag">'+esc(hero.rating)+'</span>':'')+'</div><h1>'+esc(hero.title)+'</h1><p>'+esc(hero.desc||'')+'</p><div class="acts"><button class="btn" data-act="play" data-id="'+hero.id+'">▶ Play</button><button class="btn sec" data-act="open" data-id="'+hero.id+'">Details</button></div></div></div>'+
+    rowHTML('Continue watching',cw,true)+
+    rowHTML('Latest short films',p.slice().sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0)))+[...new Set(p.map(m=>m.genre).filter(Boolean))].sort().map(g=>rowHTML(g,p.filter(m=>m.genre===g))).join('');
+}
+function catHTML(k){
+  const all=pub();
+  const gs=[...new Set(all.map(m=>m.genre).filter(Boolean))].sort();
+  const list=S.genre?all.filter(m=>m.genre===S.genre):all;
+  return '<div class="bar"><h2>'+esc(CATS[k])+'</h2><select data-on="genre" style="width:auto"><option value="">All genres</option>'+opts(gs,S.genre)+'</select></div><div style="height:14px"></div>'+(list.length?'<div class="grid">'+list.map(m=>card(m)).join('')+'</div>':'<div class="empty"><h2>No '+esc(CATS[k].toLowerCase())+' yet</h2></div>');
+}
+function searchHTML(){
+  const q=S.q.trim().toLowerCase();
+  const l=pub().filter(m=>[m.title,m.genre,m.directorName,m.desc].join(' ').toLowerCase().includes(q));
+  return '<h2>Results for “'+esc(S.q)+'”</h2><div style="height:14px"></div>'+(l.length?'<div class="grid">'+l.map(m=>card(m)).join('')+'</div>':'<div class="empty"><h2>No matches</h2></div>');
+}
+function myListHTML(){
+  const liked=S.activity.likes.map(byId).filter(m=>m&&m.status==='published');
+  const hist=Object.entries(S.activity.progress).filter(([id,x])=>{const m=byId(id);return m&&m.status==='published'}).sort((a,b)=>b[1].ts-a[1].ts).map(([id])=>byId(id));
+  if(!liked.length&&!hist.length)return '<div class="empty"><h2>Your list is empty</h2><p>Like a movie or start watching and it will show up here.</p></div>';
+  return rowHTML('Liked',liked)+rowHTML('Watched / in progress',hist,true);
+}
+
+/* ---------- detail & player ---------- */
+function openDetail(id){
+  const m=byId(id);if(!m)return;
+  const liked=S.activity.likes.includes(id);const p=S.activity.progress[id];
+  const resume=p&&p.d&&p.t/p.d>.01&&p.t/p.d<.95;
+  modal('<div style="display:flex;gap:16px;flex-wrap:wrap"><div class="th" style="width:140px;flex:none">'+(img(m.thumb)||esc(m.title[0]))+'</div><div style="flex:1;min-width:200px"><h2>'+esc(m.title)+'</h2><div class="tags"><span class="tag">'+esc(CATS[m.category]||'')+'</span>'+(m.genre?'<span class="tag">'+esc(m.genre)+'</span>':'')+(m.rating?'<span class="tag">'+esc(m.rating)+'</span>':'')+'</div><div class="note" style="margin-top:0">Directed by '+esc(m.directorName||'Unknown')+'</div></div></div><p style="line-height:1.55">'+esc(m.desc||'')+'</p>'+
+  (m.status!=='published'?'<div class="banner warn">Preview — this movie isn’t public (status: '+esc(m.status)+').</div>':'')+
+  '<div class="acts">'+(vurl(m)?'<button class="btn" data-act="play" data-id="'+id+'">▶ '+(resume?'Resume':'Play')+'</button>':'')+(vurl(m,1)?'<button class="btn sec" data-act="trailer" data-id="'+id+'">Trailer</button>':'')+'<button class="btn sec" data-act="like" data-id="'+id+'">'+(liked?'♥ Liked':'♡ Like')+'</button><button class="btn ghost" data-act="close">Close</button></div>');
+}
+function play(id,trailer){
+  const m=byId(id);if(!m)return;const src=vurl(m,trailer);if(!src){toast('No video available');return}
+  const p=S.activity.progress[id];
+  PL={id,trailer:!!trailer,last:0,start:(!trailer&&p&&p.d&&p.t/p.d<.95)?p.t:0};
+  modal('<div class="bar" style="margin-bottom:10px"><h2 style="margin:0">'+esc(m.title)+(trailer?' — Trailer':'')+'</h2><button class="btn sec sm" data-act="close">✕ Close</button></div>'+(embed(src)?'<iframe id="ifr" src="'+embed(src)+'" style="width:100%;aspect-ratio:16/9;border:0;border-radius:10px" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>':'<video id="vid" controls autoplay playsinline src="'+src+'"></video>')+'<div class="note">Video not loading? <a href="'+esc(src)+'" target="_blank" rel="noopener noreferrer" style="color:var(--red)">Open it in a new tab</a></div>',true);
+  const v=$('#vid');if(!v)return;
+  v.addEventListener('loadedmetadata',()=>{if(PL&&PL.start>1&&PL.start<v.duration-2)v.currentTime=PL.start});
+  if(!trailer){
+    v.addEventListener('timeupdate',()=>{if(Date.now()-PL.last>5000){PL.last=Date.now();flushProgress(v)}});
+    v.addEventListener('ended',()=>{flushProgress(v,true)});
+  }
+}
+function flushProgress(v,done){
+  if(!PL||PL.trailer||!v||!v.duration||isNaN(v.duration))return;
+  S.activity.progress[PL.id]={t:done?v.duration:v.currentTime,d:v.duration,ts:Date.now()};
+  saveActivity();
+}
+
+/* ---------- Studio (director) ---------- */
+const STATUS_MSG={draft:'Draft — not submitted yet.',pending:'Movie will be checked before shown to public.',published:'Congrats, your movie has been published! 🎉',rejected:'Failed to meet its standards.'};
+function studioHTML(){
+  const mine=S.movies.filter(m=>m.directorId===S.uid).sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0));
+  const news=mine.filter(m=>(m.status==='published'||m.status==='rejected')&&S.activity.seen[m.id]!==m.status+':'+m.updatedAt);
+  return '<div class="bar"><h2>Upload or edit movies</h2><button class="btn" data-act="newMovie">＋ Upload new movie</button></div>'+
+  news.map(m=>'<div class="banner '+(m.status==='published'?'ok':'bad')+'"><b>'+esc(m.title)+'</b>: '+(m.status==='published'?'Congrats, your movie has been published! 🎉':'Failed to meet its standards.')+' <button class="btn sec sm" data-act="seen" data-id="'+m.id+'" style="margin-left:8px">Dismiss</button></div>').join('')+
+  (mine.length?'<div class="list" style="margin-top:16px">'+mine.map(m=>'<div class="item"><div class="th">'+(img(m.thumb)||esc((m.title||'?')[0]))+'</div><div class="body"><h3>'+esc(m.title)+'</h3><div class="tags"><span class="tag">'+esc(CATS[m.category]||'')+'</span><span class="badge b-'+m.status+'">'+esc(m.status)+'</span>'+(vurl(m,1)?'<span class="tag">Trailer ✓</span>':'')+'</div><div class="note" style="margin-top:2px">'+esc(STATUS_MSG[m.status]||'')+'</div><div class="acts" style="margin-top:10px"><button class="btn sm" data-act="edit" data-id="'+m.id+'">Edit</button><button class="btn sec sm" data-act="open" data-id="'+m.id+'">Preview</button><button class="btn ghost sm" data-act="del" data-id="'+m.id+'">Delete</button></div></div></div>').join('')+'</div>':'<div class="empty"><h2>No movies yet</h2><p>Press “Upload new movie” to add your first one.</p></div>');
+}
+function openEditor(id,adminMode){
+  const m=id?byId(id):null;
+  E={id:id||null,m:m,admin:!!adminMode,thumb:m?m.thumb||'':'',videoId:m?m.videoId||'':'',trailerId:m?m.trailerId||'':'',busy:0};
+  const draftish=!m||m.status==='draft';
+  const canUp=!!S.assets;
+  const upNote=canUp?'':'<div class="note">⚠ Video uploads need Editor access to this site (ask the site owner to give your account Editor access).</div>';
+  modal('<h2>'+(m?'Edit short film':(adminMode?'Add short film':'Upload new short film'))+'</h2>'+
+  '<label>Name</label><input type="text" id="e-title" value="'+esc(m?m.title:'')+'">'+
+  '<label>Description</label><textarea id="e-desc">'+esc(m?m.desc:'')+'</textarea>'+
+  
+  (adminMode?'<label>Genre</label><select id="e-genre">'+opts(GENRES,m&&m.genre,'Choose genre')+'</select><label>Age rating</label><select id="e-rating">'+opts(RATINGS,m&&m.rating,'Choose rating')+'</select>':'')+
+  '<label>Thumbnail</label><input type="file" accept="image/*" data-on="thumb"><div id="e-tprev">'+(img(E.thumb,'tp'))+'</div>'+
+  '<label>Movie link</label><input type="text" id="e-video" placeholder="https://… (YouTube, Vimeo or a direct .mp4 link)" value="'+esc(m&&m.videoUrl||'')+'">'+(E.videoId&&!(m&&m.videoUrl)?'<div class="note">A file uploaded earlier is attached. Paste a link to replace it.</div>':'')+
+  '<label>Trailer link (optional)</label><input type="text" id="e-trailer" placeholder="https://…" value="'+esc(m&&m.trailerUrl||'')+'"><div class="note">Links must start with https:// and be openable by anyone (on YouTube choose “Unlisted”, not “Private”).</div>'+
+  (adminMode?'':'<div class="note">'+(draftish?'When you press Publish, your movie will be checked before it is shown to the public.':'Saving your changes sends this movie back for checking before it is shown to the public.')+'</div>')+
+  '<div class="acts">'+(adminMode?'<button class="btn" data-act="save" data-mode="admin">'+(m?'Save changes':'Add movie')+'</button>':(draftish?'<button class="btn sec" data-act="save" data-mode="draft">Save draft</button><button class="btn" data-act="save" data-mode="publish">Publish</button>':'<button class="btn" data-act="save" data-mode="publish">Save changes</button>'))+'<button class="btn ghost" data-act="close">Cancel</button></div>');
+}
+function resizeThumb(file){return new Promise((res,rej)=>{const fr=new FileReader();fr.onerror=rej;fr.onload=()=>{const im=new Image();im.onerror=rej;im.onload=()=>{const W=360,H=540,c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');const s=Math.max(W/im.width,H/im.height),w=im.width*s,h=im.height*s;x.drawImage(im,(W-w)/2,(H-h)/2,w,h);res(c.toDataURL('image/jpeg',.78))};im.src=fr.result};fr.readAsDataURL(file)})}
+async function onFile(kind,input){
+  const f=input.files&&input.files[0];if(!f||!E)return;
+  if(kind==='thumb'){try{E.thumb=await resizeThumb(f);$('#e-tprev').innerHTML=img(E.thumb,'tp')}catch(e){toast("Couldn't read that image")}return}
+  if(!S.assets){toast('Video upload isn’t available on your account');return}
+  if(f.size>20*1024*1024){toast('Video is too large — the limit is 20 MB');input.value='';return}
+  const st=$(kind==='video'?'#e-vst':'#e-tst');st.textContent='Uploading…';E.busy++;
+  try{const r=await S.assets.upload(f);if(!E)return;E[kind==='video'?'videoId':'trailerId']=r.id;st.textContent='✓ Uploaded'}
+  catch(e){st.textContent='Upload failed — try again'}
+  finally{if(E)E.busy--}
+}
+async function saveMovie(mode){
+  if(!E)return;
+  if(E.busy){toast('Please wait for uploads to finish');return}
+  const title=$('#e-title').value.trim();if(!title){toast('Give your movie a name');return}
+  const old=E.m,now=Date.now();
+  let status;
+  if(E.admin)status=old?old.status:'published';else if(mode==='draft')status='draft';else status='pending';
+  const vu=$('#e-video').value.trim(),tu=$('#e-trailer').value.trim();
+  if((vu&&!okUrl(vu))||(tu&&!okUrl(tu))){toast('Links must start with https:// and have no spaces');return}
+  if(status!=='draft'&&(!E.thumb||!(vu||E.videoId))){toast('Add a thumbnail and the movie link first');return}
+  const doc={title,desc:$('#e-desc').value.trim(),category:'short',thumb:E.thumb,videoUrl:vu,trailerUrl:tu,videoId:vu?'':E.videoId,trailerId:tu?'':E.trailerId,status,
+    genre:E.admin?$('#e-genre').value:(old?old.genre||'':''),rating:E.admin?$('#e-rating').value:(old?old.rating||'':''),
+    directorId:old?old.directorId:(E.admin?'admin':S.uid),directorName:old?old.directorName:(E.admin?'Admin':S.profile.name),
+    createdAt:old?old.createdAt||now:now,updatedAt:now};
+  if(E.admin&&status==='published'&&(!doc.genre||!doc.rating)){toast('Choose a genre and age rating');return}
+  const id=E.id||newId();
+  try{await S.db.doc('movies/'+id).set(doc)}catch(e){toast("Couldn't save — you may need Contributor access.");return}
+  closeModal();
+  toast(status==='pending'?'Movie will be checked before shown to public.':(status==='draft'?'Draft saved.':'Saved.'),5000);
+}
+
+/* ---------- Admin ---------- */
+function adminLoginPrompt(){return '<div class="empty"><h2>Admin area</h2><p>Log in to review, add and delete movies.</p><button class="btn" data-act="adminLogin">Admin login</button></div>'}
+function adminHTML(){
+  const t=S.adminTab;const pend=S.movies.filter(m=>m.status==='pending'),trash=S.movies.filter(m=>m.status==='rejected'),all=S.movies.filter(m=>m.status==='published');
+  const tabs=[['review','Review ('+pend.length+')'],['all','All movies ('+all.length+')'],['add','Add movie'],['trash','Trash ('+trash.length+')']];
+  let h='<div class="bar"><h2>Admin</h2><button class="btn ghost sm" data-act="adminOut">Log out</button></div><div class="tabs">'+tabs.map(x=>'<button class="'+(t===x[0]?'on':'')+'" data-act="atab2" data-v="'+x[0]+'">'+esc(x[1])+'</button>').join('')+'</div>';
+  if(t==='review'){
+    h+=pend.length?'<div class="list">'+pend.map(m=>'<div class="item"><div class="th">'+(img(m.thumb)||esc(m.title[0]))+'</div><div class="body"><h3>'+esc(m.title)+'</h3><div class="note" style="margin-top:2px">by '+esc(m.directorName)+' · '+esc(CATS[m.category]||'')+'</div><p style="margin:8px 0;font-size:14px;line-height:1.45">'+esc(m.desc||'')+'</p><div class="acts" style="margin-top:6px"><button class="btn sec sm" data-act="play" data-id="'+m.id+'">▶ Watch movie</button>'+(vurl(m,1)?'<button class="btn sec sm" data-act="trailer" data-id="'+m.id+'">▶ Trailer</button>':'')+'</div><div class="sel2"><select id="g-'+m.id+'">'+opts(GENRES,m.genre,'Genre')+'</select><select id="r-'+m.id+'">'+opts(RATINGS,m.rating,'Age rating')+'</select></div><div class="acts" style="margin-top:10px"><button class="btn ok sm" data-act="accept" data-id="'+m.id+'">Accept</button><button class="btn sm" data-act="decline" data-id="'+m.id+'">Decline</button></div></div></div>').join('')+'</div>':'<div class="empty"><h2>Nothing to review</h2></div>';
+  }else if(t==='all'){
+    h+=all.length?'<div class="list">'+all.map(m=>'<div class="item"><div class="th">'+(img(m.thumb)||esc(m.title[0]))+'</div><div class="body"><h3>'+esc(m.title)+'</h3><div class="tags"><span class="tag">'+esc(CATS[m.category]||'')+'</span><span class="tag">'+esc(m.genre||'')+'</span><span class="tag">'+esc(m.rating||'')+'</span><span class="tag">by '+esc(m.directorName)+'</span></div><div class="acts" style="margin-top:6px"><button class="btn sec sm" data-act="aedit" data-id="'+m.id+'">Edit</button><button class="btn ghost sm" data-act="del" data-id="'+m.id+'">Delete</button></div></div></div>').join('')+'</div>':'<div class="empty"><h2>No published movies</h2></div>';
+  }else if(t==='add'){
+    h+='<div class="empty"><p>Add a movie directly to the public library (no review needed).</p><button class="btn" data-act="aadd">＋ Add movie</button></div>';
+  }else{
+    h+=trash.length?'<div class="list">'+trash.map(m=>'<div class="item"><div class="th">'+(img(m.thumb)||esc(m.title[0]))+'</div><div class="body"><h3>'+esc(m.title)+'</h3><div class="note" style="margin-top:2px">by '+esc(m.directorName)+' · rejected</div><div class="acts" style="margin-top:8px"><button class="btn sec sm" data-act="restore" data-id="'+m.id+'">Restore to review</button><button class="btn ghost sm" data-act="del" data-id="'+m.id+'">Delete forever</button></div></div></div>').join('')+'</div>':'<div class="empty"><h2>Trash is empty</h2></div>';
+  }
+  return h;
+}
+async function decide(id,accept){
+  const m=byId(id);if(!m)return;const now=Date.now();let patch;
+  if(accept){const g=$('#g-'+id).value,r=$('#r-'+id).value;if(!g||!r){toast('Choose a genre and an age rating first');return}patch={status:'published',genre:g,rating:r,updatedAt:now}}
+  else patch={status:'rejected',updatedAt:now};
+  try{await S.db.doc('movies/'+id).update(patch);toast(accept?'Accepted — now public.':'Declined — moved to trash.')}catch(e){toast("Couldn't update the movie.")}
+}
+async function removeMovie(id){
+  const m=byId(id);try{await S.db.doc('movies/'+id).delete();toast('Deleted.');if(m&&S.assets){for(const a of [m.videoId,m.trailerId]){if(a)try{await S.assets.delete(a)}catch(e){}}}}catch(e){toast("Couldn't delete.")}
+}
+
+/* ---------- actions ---------- */
+const A={
+  bd(t,e){if(e.target===t&&!PL)closeModal();else if(e.target===t)closeModal()},
+  close(){closeModal()},
+  nav(t){S.view=t.dataset.v;S.q='';S.genre='';if(S.view==='admin'&&!S.admin){render();adminLogin();return}render()},
+  atab(t){S.authTab=t.dataset.v;render()},
+  atab2(t){S.adminTab=t.dataset.v;fill()},
+  async mkViewer(){const n=$('#a-name').value.trim();if(!n){toast('Enter a name');return}
+    const p={name:n,isDirector:false,createdAt:Date.now()};try{await S.db.doc('data/users/'+S.uid+'/profile').set(p);S.profile=p;render()}catch(e){toast("Couldn't create the account — you may only have view access.")}},
+  async mkDirector(){const n=$('#d-name').value.trim(),d=$('#d-dob').value;if(n.split(/\s+/).length<2){toast('Please enter your full name (first and last)');return}
+    if(!d){toast('Enter your date of birth');return}if(age(d)<=16){toast('You must be older than 16 to create a director account');return}
+    const p=Object.assign({},S.profile||{},{name:n,dob:d,isDirector:true,createdAt:(S.profile&&S.profile.createdAt)||Date.now()});
+    try{await S.db.doc('data/users/'+S.uid+'/profile').set(p);await S.db.doc('directors/'+S.uid).set({name:n});S.profile=p;closeModal();S.view='studio';render();toast('Director account created!')}catch(e){toast("Couldn't create the account — you may only have view access.")}},
+  beDirector(){modal('<h2>Become a Director</h2>'+directorForm().replace('<div class="acts">','<div class="acts"><button class="btn ghost" data-act="close">Cancel</button>'))},
+  open(t){openDetail(t.dataset.id)},
+  play(t){play(t.dataset.id,false)},
+  trailer(t){play(t.dataset.id,true)},
+  like(t){const id=t.dataset.id,l=S.activity.likes,i=l.indexOf(id);if(i>=0)l.splice(i,1);else l.push(id);saveActivity(true);t.textContent=i>=0?'♡ Like':'♥ Liked';fill()},
+  newMovie(){openEditor(null,false)},
+  edit(t){openEditor(t.dataset.id,false)},
+  save(t){saveMovie(t.dataset.mode)},
+  seen(t){const m=byId(t.dataset.id);if(m){S.activity.seen[m.id]=m.status+':'+m.updatedAt;saveActivity(true);fill()}},
+  del(t){if(t.dataset.c){removeMovie(t.dataset.id);return}t.dataset.c='1';t.textContent='Confirm?';t.classList.remove('ghost');setTimeout(()=>{if(t.isConnected){delete t.dataset.c;t.textContent='Delete';t.classList.add('ghost')}},3500)},
+  accept(t){decide(t.dataset.id,true)},decline(t){decide(t.dataset.id,false)},
+  async restore(t){try{await S.db.doc('movies/'+t.dataset.id).update({status:'pending',updatedAt:Date.now()})}catch(e){toast("Couldn't restore.")}},
+  aedit(t){openEditor(t.dataset.id,true)},aadd(){openEditor(null,true)},
+  adminLogin(){adminLogin()},
+  adminOut(){S.admin=false;try{sessionStorage.removeItem('rh_admin')}catch(e){}S.view='home';render()},
+  doAdmin(){const u=$('#ad-u').value.trim(),p=$('#ad-p').value;
+    if(u===ADMIN_USER&&p===ADMIN_PASS){S.admin=true;try{sessionStorage.setItem('rh_admin','1')}catch(e){}closeModal();S.view='admin';render();toast('Welcome, ARDA')}
+    else{$('#ad-err').textContent='Wrong username or password.'}}
+};
+function adminLogin(){modal('<h2>Admin login</h2><label>Username</label><input type="text" id="ad-u" autocomplete="off"><label>Password</label><input type="password" id="ad-p" autocomplete="off"><div class="note" id="ad-err" style="color:#ff6b73"></div><div class="acts"><button class="btn" data-act="doAdmin">Log in</button><button class="btn ghost" data-act="close">Cancel</button></div>')}
+document.addEventListener('click',e=>{const t=e.target.closest('[data-act]');if(t&&A[t.dataset.act])A[t.dataset.act](t,e)});
+document.addEventListener('change',e=>{const k=e.target.dataset.on;if(k==='genre'){S.genre=e.target.value;fill()}else if(k==='thumb'||k==='video'||k==='trailer')onFile(k,e.target)});
+document.addEventListener('input',e=>{if(e.target.id==='q'){S.q=e.target.value;fill()}});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.id==='ad-p')A.doAdmin()});
+init();
+</script>
+</body>
+</html>
